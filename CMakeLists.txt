@@ -15,6 +15,7 @@ include_directories(
 link_directories(${LIBCAMERA_LIBRARY_DIRS})
 
 add_executable(camera_cli
+    src/main.cpp
     src/ZeroCopyCamera.cpp
 )
 
