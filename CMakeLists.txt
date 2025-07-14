@@ -1,4 +1,3 @@
-// File: CMakeLists.txt
 cmake_minimum_required(VERSION 3.13)
 project(zero_copy_camera)
 
@@ -16,8 +15,7 @@ include_directories(
 link_directories(${LIBCAMERA_LIBRARY_DIRS})
 
 add_executable(camera_cli
-    src/main.cpp
-    src/CameraManager.cpp
+    src/ZeroCopyCamera.cpp
 )
 
 target_link_libraries(camera_cli
