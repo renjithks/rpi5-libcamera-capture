@@ -84,7 +84,9 @@ void ZeroCopyCamera::requestComplete(Request *request)
         munmap(memory, plane.length);
     }
 
-    camera_->queueRequest(request);
+    // Reset request and reattach buffer before requeuing
+    request->reuse();  // clears internal state and prepares for reuse
+    camera_->queueRequest(request);  // safe now
 }
 
 void ZeroCopyCamera::shutdown()
