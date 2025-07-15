@@ -8,6 +8,7 @@ int main() {
         return 1;
     }
 
+    camera.start();
     std::cout << "Camera initialized. Press Enter to exit." << std::endl;
     std::cin.get();
 
