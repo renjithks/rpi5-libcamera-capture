@@ -9,6 +9,8 @@
 
 class ZeroCopyCamera {
 public:
+    ZeroCopyCamera();
+    ~ZeroCopyCamera();
     bool initialize();
     void shutdown();
 
