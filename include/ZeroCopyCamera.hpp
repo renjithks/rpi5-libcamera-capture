@@ -1,10 +1,8 @@
-#ifndef ZERO_COPY_CAMERA_HPP
-#define ZERO_COPY_CAMERA_HPP
+#pragma once
 
 #include <libcamera/libcamera.h>
 #include <libcamera/camera_manager.h>
 #include <libcamera/framebuffer_allocator.h>
-#include <libcamera/request.h>
 #include <memory>
 #include <vector>
 
@@ -13,6 +11,8 @@ public:
     ZeroCopyCamera();
     ~ZeroCopyCamera();
 
+    bool initialize();
+    void shutdown();
     void start();
 
 private:
@@ -25,5 +25,3 @@ private:
     std::unique_ptr<libcamera::FrameBufferAllocator> allocator_;
     std::vector<std::unique_ptr<libcamera::Request>> requests_;
 };
-
-#endif // ZERO_COPY_CAMERA_HPP

@@ -3,13 +3,19 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-ZeroCopyCamera::ZeroCopyCamera() : camera_(nullptr) {
+ZeroCopyCamera::ZeroCopyCamera() : camera_(nullptr), stream_(nullptr) {}
+
+ZeroCopyCamera::~ZeroCopyCamera() {
+    shutdown();
+}
+
+bool ZeroCopyCamera::initialize() {
     manager_ = std::make_unique<libcamera::CameraManager>();
     manager_->start();
 
     if (manager_->cameras().empty()) {
         std::cerr << "[ERROR] No cameras found." << std::endl;
-        return;
+        return false;
     }
 
     camera_ = manager_->cameras()[0];
@@ -45,14 +51,17 @@ ZeroCopyCamera::ZeroCopyCamera() : camera_(nullptr) {
     }
 
     camera_->requestCompleted.connect(this, &ZeroCopyCamera::requestComplete);
+
+    return true;
 }
 
-ZeroCopyCamera::~ZeroCopyCamera() {
+void ZeroCopyCamera::shutdown() {
     if (camera_) {
         camera_->stop();
         camera_->release();
     }
-    manager_->stop();
+    if (manager_)
+        manager_->stop();
 }
 
 void ZeroCopyCamera::start() {
