@@ -108,5 +108,6 @@ void ZeroCopyCamera::requestComplete(libcamera::Request* request) {
     }
 
     std::cout << "[QUEUE] Requeueing request ID: " << request->cookie() << std::endl;
+    request->reuse(libcamera::Request::ReuseBuffers);
     camera_->queueRequest(request);
 }
